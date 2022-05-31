@@ -3,6 +3,8 @@ import { OnInit } from '@angular/core';
 import { WeatherData } from './models/weather.model';
 import { WeatherService } from './services/weather.service';
 import { NgForm } from '@angular/forms';
+import { HotToastService } from '@ngneat/hot-toast';
+import { Content } from '@ngneat/overview';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,7 @@ export class AppComponent implements OnInit {
   city: string | null = '';
   weatherData?: WeatherData;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService, private toast: HotToastService) {}
   ngOnInit(): void {
     
   }
@@ -24,11 +26,18 @@ export class AppComponent implements OnInit {
         next: (response: WeatherData) => {
           this.weatherData = response;
           this.city = '';
+          this.toast.success("Fetched!");
         },
         error: (error) => {
-          console.log(error);
+          if (error.status == 404) {
+            this.toast.error(`${form.value.searchQuery} is not a valid city name!`);
+          } else {
+            this.toast.error('Please try again later!');
+          }
         },
       });
+    } else {
+      this.toast.error("Please enter a city name!")
     }
   }
 }
