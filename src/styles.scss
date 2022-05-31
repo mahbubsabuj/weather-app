@@ -21,19 +21,9 @@ body {
     font-size: 16px;
     width: 100%;
     height:100vh;
-    background-color: var(--blue-1);
+    background-color: rgb(38, 38, 131);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.container {
-    width: 35vw;
-    height: 80vh;
-    background-color: var(--blue-2);
-    border-radius: 20px;
-    box-shadow: 10px 10px 10px var(--shadow-dark);
-    
-}
-
 
